@@ -48,9 +48,10 @@ download some music on my desktop and in a later time I download some
 other music on my laptop, then I have a synchronization problem where
 I don't know where a certain song is stored. Moreover, if I distro hop
 or my disks fail, then I need to manually download again all the
-songs, which is a lot of work considering the number of songs I have.
-I could always use an external drive that I can bring with me all the
-time, but that seems overkill.
+songs, which is a lot of work considering the number of songs I have,
+and I don't even know all the songs I have.  I could always use an
+external drive that I can bring with me all the time, but that seems
+overkill.
 
 To summarize, I needed a way to synchronize my music. I could use
 rsync, this is probably the better solution, however I thought that I
@@ -58,17 +59,18 @@ could have something simpler that does not require me to have songs
 already downloaded in order to synchronize them. What I really want is
 a description of all the songs I want to have, including their name
 and directory (I use directories as playlists). Then, I would just
-synchronize this description file via git and download new songs If
-the file was modified.
+synchronize this description file via git and download new songs given
+the file If It was modified.
 
-Hence, I took a couple of hours to write this script. I am not completely
-new to elisp having already written [[https://github.com/San7o/tiny-rss/][tiny-rss]], however It's been
-some time since I wrote some elisp code. Overall, I think this
-works well for me and It solved my problem.
+Hence, I took a couple of hours to write this script. I am not
+completely new to elisp having already written a more serious project
+[[https://github.com/San7o/tiny-rss/][tiny-rss]], however It's been some time since I wrote some elisp
+code. Overall, I think this works well for me and It solved my
+problem.
 
 ** License
 
 The code is published under the [[file:LICENSE][GPLv3]] license. This program has
-nothing to do with similarly names projects, I did not look at other
+nothing to do with similarly named projects, I did not look at other
 repositories for this project not even for inspiration. Yes, this
 thing has been done before but I do not care.
