@@ -1,0 +1,74 @@
+#+startup: content indent
+
+* musync.el
+
+Download music asynchronously using =yt-dlp= given a list of songs,
+including the name, author and category. This script will help you
+easily synchronize / version control your local music across your
+machines by storing a description of all your songs as a lisp list.
+
+** Example
+
+#+begin_src emacs-lisp
+  (musync
+   (list
+    (list
+     :name "Immanuel"
+     :author "Tony Anderson"
+     :category "Instrumental"
+     :link "https://music.youtube.com/watch?v=yi2IdZuSgRI&si=Xus4F44e_qad7W8l")
+    (list
+     :name "Interstellar"
+     :author "Hanz Zimmer"
+     :category "Soundtracks"
+     :link "https://music.youtube.com/watch?v=1ki7oATXdXc&si=0c52s2Ij25d-aKGm")
+    (list
+     :name "Letters"
+     :author "Silent Hill 2"
+     :category "Soundtracks"
+     :link "https://music.youtube.com/watch?v=acQrKPVA32I&si=qovVxkZCWpYaWqWv")
+    (list
+     :name "Mazurka"
+     :category "Folk"
+     :link "https://music.youtube.com/watch?v=KcNY1qLBA2o&si=xywKmFgoY-qorwmy")
+    ))
+#+end_src
+
+** Motivation
+
+I usually download music locally. I do this in part because I want to
+be able to listen to my favourite music offline and in part because I
+want to use emacs as my music player, as everybody does. So I have a
+lot of songs stored on my computer and I can happily enjoy them in
+peace and without a browser. Sounds good, but there are some
+complications with this system.
+
+The first problem arises when I am using multiple machines. If I
+download some music on my desktop and in a later time I download some
+other music on my laptop, then I have a synchronization problem where
+I don't know where a certain song is stored. Moreover, if I distro hop
+or my disks fail, then I need to manually download again all the
+songs, which is a lot of work considering the number of songs I have.
+I could always use an external drive that I can bring with me all the
+time, but that seems overkill.
+
+To summarize, I needed a way to synchronize my music. I could use
+rsync, this is probably the better solution, however I thought that I
+could have something simpler that does not require me to have songs
+already downloaded in order to synchronize them. What I really want is
+a description of all the songs I want to have, including their name
+and directory (I use directories as playlists). Then, I would just
+synchronize this description file via git and download new songs If
+the file was modified.
+
+Hence, I took a couple of hours to write this script. I am not completely
+new to elisp having already written [[https://github.com/San7o/tiny-rss/][tiny-rss]], however It's been
+some time since I wrote some elisp code. Overall, I think this
+works well for me and It solved my problem.
+
+** License
+
+The code is published under the [[file:LICENSE][GPLv3]] license. This program has
+nothing to do with similarly names projects, I did not look at other
+repositories for this project not even for inspiration. Yes, this
+thing has been done before but I do not care.
