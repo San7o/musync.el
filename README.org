@@ -31,7 +31,7 @@ machines by storing a description of all your songs as a lisp list.
      :name "Mazurka"
      :category "Folk"
      :link "https://music.youtube.com/watch?v=KcNY1qLBA2o&si=xywKmFgoY-qorwmy")
-    :async y))
+    :async t))
 #+end_src
 
 ** Motivation
