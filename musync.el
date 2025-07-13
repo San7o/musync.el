@@ -32,7 +32,7 @@
 ;; system. Hence, you can easily synchronize / version control your
 ;; local music across your machines.
 
-;; Code:
+;;; Code:
 
 (setq musync--base-directory
       "~/music")
@@ -43,7 +43,7 @@
 (setq musync--command
       "yt-dlp -f bestaudio -x --audio-format FORMAT -o \"NAME\" -P PATH \"LINK\"")
 
-(defun musync (entries)
+(defun musync (entries &optional args)
   "Downloads a list of songs entries.
 
 entries is a list of songs, each song must have at least the
@@ -73,26 +73,29 @@ For example:
     :link \"https://music.youtube.com/watch?v=1ki7oATXdXc&si=0c52s2Ij25d-aKGm\"))
 "
   (dolist (entry entries)
-    (let* ((command musync--command)
-            (name (plist-get entry :name))
-            (author (plist-get entry :author))
-            (category (plist-get entry :category))
-            (link (plist-get entry :link))
-            (path (concat musync--base-directory "/" category)))
-      (if (and name link)
-          (let* ((concat-name (if author
-                                  (concat name " - " author)
-                                name))
-                 (full-name (concat concat-name ".mp3")))
-            (if (not (file-exists-p (concat path "/" full-name)))
-                (let* ((command (string-replace "FORMAT" musync--audio-format command))
-                       (command (string-replace "NAME" full-name command))
-                       (command (string-replace "PATH" path command))
-                       (command (string-replace "LINK" link command))
-                       (buf (generate-new-buffer "musync")))
-                  (async-shell-command command buf buf))
-              ;;(print command))
-              (message "At lest :name and :url must be specified")))))))
+    (let ((async-p (plist-get args :async)))
+      (let* ((command musync--command)
+             (name (plist-get entry :name))
+             (author (plist-get entry :author))
+             (category (plist-get entry :category))
+             (link (plist-get entry :link))
+             (path (concat musync--base-directory "/" category)))
+        (if (and name link)
+            (let* ((concat-name (if author
+                                    (concat name " - " author)
+                                  name))
+                   (full-name (concat concat-name ".mp3")))
+              (if (not (file-exists-p (concat path "/" full-name)))
+                  (let* ((command (string-replace "FORMAT" musync--audio-format command))
+                         (command (string-replace "NAME" full-name command))
+                         (command (string-replace "PATH" path command))
+                         (command (string-replace "LINK" link command))
+                         (buf (generate-new-buffer "musync")))
+                    (if async-p
+                        (async-shell-command command buf buf)
+                      (shell-command command buf buf)))
+                    ;;(print command)) ; For debugging
+                    (message "At lest :name and :link must be specified"))))))))
 
 (provide 'musync)
 
